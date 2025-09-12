@@ -1,12 +1,11 @@
 class Solution {
     public boolean doesAliceWin(String s) {
-        String vowels = "aeiou";
-        int count = 0;
+        Set<Character> vowels = Set.of('a', 'e', 'i', 'o', 'u');
         for (char ch : s.toCharArray()) {
-            if (vowels.contains(String.valueOf(ch))) {
-                count += 1;
+            if (vowels.contains(ch)) {
+                return true;
             }
         }
-        return count > 0;
+        return false;
     }
 }
