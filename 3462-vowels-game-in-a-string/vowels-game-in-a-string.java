@@ -3,7 +3,7 @@ class Solution {
         String vowels = "aeiou";
         int count = 0;
         for (char ch : s.toCharArray()) {
-            if (vowels.indexOf(ch) != -1) {
+            if (vowels.contains(String.valueOf(ch))) {
                 count += 1;
             }
         }
