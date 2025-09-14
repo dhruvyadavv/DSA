@@ -1,5 +1,5 @@
 class Solution {
-        public String[] spellchecker(String[] wordlist, String[] queries) {
+    public String[] spellchecker(String[] wordlist, String[] queries) {
         Set<String> words = new HashSet<>(Arrays.asList(wordlist));
         HashMap<String, String> cap = new HashMap<>();
         HashMap<String, String> vowel = new HashMap<>();
@@ -9,7 +9,8 @@ class Solution {
             vowel.putIfAbsent(devowel, w);
         }
         for (int i = 0; i < queries.length; ++i) {
-            if (words.contains(queries[i])) continue;
+            if (words.contains(queries[i]))
+                continue;
             String lower = queries[i].toLowerCase(), devowel = lower.replaceAll("[aeiou]", "#");
             if (cap.containsKey(lower)) {
                 queries[i] = cap.get(lower);
