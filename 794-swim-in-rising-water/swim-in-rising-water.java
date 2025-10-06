@@ -1,21 +1,30 @@
 class Solution {
     public int swimInWater(int[][] grid) {
-        int time = 0;
-        int N = grid.length;
-        Set<Integer> visited = new HashSet<>();
-        while(!visited.contains(N*N-1)) {
-            visited.clear();
-            dfs(grid, 0, 0, time, visited);
-            time++;
+        int m = grid.length, n = grid[0].length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        int[][] directions = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+        Set<String> seen = new HashSet<>();
+        
+        pq.offer(new int[]{grid[0][0], 0, 0});
+        
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int max_d = curr[0], r = curr[1], c = curr[2];
+            
+            String key = r + "," + c;
+            if (seen.contains(key)) continue;
+            seen.add(key);
+            
+            if (r == m-1 && c == n-1) return max_d;
+            
+            for (int[] dir : directions) {
+                int nr = r + dir[0], nc = c + dir[1];
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n && !seen.contains(nr + "," + nc)) {
+                    int new_d = Math.max(max_d, grid[nr][nc]);
+                    pq.offer(new int[]{new_d, nr, nc});
+                }
+            }
         }
-        return time - 1;
-    }
-    int[][] dirs = {{-1,0},{1,0},{0,1},{0,-1}};
-    private void dfs(int[][] grid, int i, int j, int time, Set<Integer> visited) {
-        if (i < 0 || i > grid.length - 1 || j < 0 || j > grid[0].length - 1 || grid[i][j] > time || visited.contains(i*grid.length+j)) return;
-        visited.add(i*grid.length+j);
-        for (int[] dir : dirs) {
-            dfs(grid, i+dir[0], j+dir[1], time, visited);
-        }
+        return -1;
     }
 }
